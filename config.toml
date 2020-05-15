@@ -16,13 +16,12 @@ theme = "hugo-sustain"
   description = "Describe your website"
 
   # Custom assets can be linked with their paths relative to static/
-  custom_css = []
-  custom_js  = []
+  #custom_css = []
+  #custom_js  = []
 
 [params.social]
   Github        = "cshori2000"
   Email         = "cshori@icloud.com"
-  Instagram     = "c_shori2000"
 
 ## Main Menu
 [[menu.main]]
