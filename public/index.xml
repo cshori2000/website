@@ -6,10 +6,30 @@
     <description>Recent content on Meet Chandershekhar</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 02 Oct 2016 22:55:05 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SDS 348 Project 1</title>
+      <link>/project1/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project1/</guid>
+      <description>Chandershekhar Shori, EID–cs56788
+Introduction: The first data set chosen for this project is the lung dataset. The lung dataset contains data about survival among patients from the North Central Cancer Treatment Group. This dataset contains 10 variables, and these variables are inst, time, status, age, sex, ph.ecog, ph.karno, pat.karno, meal.cal, and wt.loss. The inst variable represents the institution code, the time variable represents the survival time in days, the status variable represents the censoring status, the age variable represents the age in years, meal.</description>
+    </item>
+    
+    <item>
+      <title>SDS 348 Project 2</title>
+      <link>/project2/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project2/</guid>
+      <description>Chandershekhar Shori, EID–cs56788
+Introduction: The dataset chosen for this project is the SLID dataset, which can be found in the carData package and accessed by using library(carData). Each row of this dataset represents information collected from a single individual living in the Canadian province of Ontario and is part of the workforce. For this purposes of this project only complete data provided by individuals will be used for this project, and any rows containing NA values will be removed.</description>
+    </item>
     
     <item>
       <title>Projects</title>
@@ -77,26 +97,6 @@ Follow the following steps:
       <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
 ▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
 ▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
-    </item>
-    
-    <item>
-      <title>SDS 348 Project 1</title>
-      <link>/project1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/project1/</guid>
-      <description>Chandershekhar Shori, EID–cs56788
-Introduction: The first data set chosen for this project is the lung dataset. The lung dataset contains data about survival among patients from the North Central Cancer Treatment Group. This dataset contains 10 variables, and these variables are inst, time, status, age, sex, ph.ecog, ph.karno, pat.karno, meal.cal, and wt.loss. The inst variable represents the institution code, the time variable represents the survival time in days, the status variable represents the censoring status, the age variable represents the age in years, meal.</description>
-    </item>
-    
-    <item>
-      <title>SDS 348 Project 2</title>
-      <link>/project2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/project2/</guid>
-      <description>Chandershekhar Shori, EID–cs56788
-Introduction: The dataset chosen for this project is the SLID dataset, which can be found in the carData package and accessed by using library(carData). Each row of this dataset represents information collected from a single individual living in the Canadian province of Ontario and is part of the workforce. For this purposes of this project only complete data provided by individuals will be used for this project, and any rows containing NA values will be removed.</description>
     </item>
     
   </channel>
