@@ -22,6 +22,7 @@ theme = "hugo-sustain"
 [params.social]
   Github        = "cshori2000"
   Email         = "cshori@icloud.com"
+  Instagram     = "c_shori2000"
 
 ## Main Menu
 [[menu.main]]
