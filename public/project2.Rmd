@@ -1,0 +1,198 @@
+---
+title: "SDS 348 Project 2"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+*Chandershekhar Shori, EID--cs56788*
+
+
+
+## Introduction:
+
+  The dataset chosen for this project is the SLID dataset, which can be found in the carData package and accessed by using library(carData). Each row of this dataset represents information collected from a single individual living in the Canadian province of Ontario and is part of the workforce. For this purposes of this project only complete data provided by individuals will be used for this project, and any rows containing NA values will be removed. Doing so leads us to having a dataset with 3987 rows of observations, which means 3987 people have complete data that can be used for the purposes of this investigation. This dataset contains five variables: wages, education, age, sex, and language. First I shall go over the numerical variables used for this study. The wages variables measures the hourly wage rate from all jobs that the individal does, while the education variable measures the number of years of schooling done by the individual. Also the age variable contains the age in years of the individual whose data was collected in that row. Next, I will go over the two categorical variables in this dataset. The first variable is gender, which is the binary categorical variable that will be used for this study, and can take on the values of either "Male" or "Female." The other categorical variable that is going to be used in this study is language, which represents the language the individual in observation speaks. There are three values for this variable with them being: "English", "French", and "Other". In this study, I expect to see wages be the highest for English-speaking males, and also expect wages to increase as years of education and age increase.
+
+```{r cars}
+library(carData)
+?SLID
+Data = SLID
+Data = Data[complete.cases(Data),]
+nrow(Data)
+
+```
+
+## ANOVA and MANOVA Testing
+
+In the code below, a MANOVA was conducted of all three numerical variables that were in this dataset to see if there was a mean difference across the different levels of language, which is categorial variable. Since significance was shown through a low p-value in the MANOVA, a univariate ANOVA was conducted to see which specific variables differed across groups and it was found that age and education differed. One this was done, two post hocs were completed for each of these variables. It should be noted throughout this process 10 tests were completed: 1 MANOVA, 3 ANOVAs, and 6 post hocs, which results in a Bonferroni correction of .005 and decreases the chance of type one error to 0.04888987. By applying these adjusted values to the post hoc tests, it was found that there was significant mean difference between the English and Other language group for both the age and education variabe post hoc tests. This is likely due to the fact that many immigrants come to Canada from countris where English may not be the most common language, such as India. The indiduals are likely to be much older and unable to learn a new language, which may concurrently effect their ability to receive formal education in Canada due to the common languages being French and English. It is worth noting that not all the ANOVA assumptions were not exactly followed in this exam test. The reason being is that the data is not exactly random since we selectively chose for complete cases.
+
+```{R}
+library(dplyr)
+library(pillar)
+man1<-manova(cbind(education,age,wages)~language, data=Data)
+summary(man1)
+summary.aov(man1)
+Data %>% group_by(language) %>% summarize(mean(education), mean(age), mean(wages))
+## Post Hoc Test 1
+pairwise.t.test(Data$age,Data$language,
+                p.adj="none")
+## Post Hoc Test 2
+pairwise.t.test(Data$education,Data$language,
+                p.adj="none")
+.05/10 ## Bonferroni correction 
+1-(.95^10) ## Chance of type I error before adjustion
+1-((1-.005)^10) ## Chance of type I error after Bonferroni correction
+```
+
+
+
+## Randomization Tests
+A randomization test is done below to see whether wages vary amongst the genders Male and Female. The null hypothesis is that: There is no difference in wages amongst Males and Females. On the other hand, the alternative hypothesis is: There is a significant difference in wages amongst males and females. When the histogram is created, it is observed that the line for the test statistic does not even show up on the histogram, which is indicative of the fact that the results are clustered closer to the middle of the distribution and are not well spread out. As shown, this results in a p-value of zero, which is further backed up by the low p-value obtained on the Welch test. This indicates that there is a significant difference in wages amongst males and females. 
+```{R}
+library(ggplot2)
+Data%>%group_by(sex)%>%
+    summarize(means=mean(wages))%>%summarize(`mean_diff:`=diff(means))
+rand_dist<-vector()
+for(i in 1:5000){
+new<-data.frame(wages=sample(Data$wages),gender=Data$sex)
+rand_dist[i]<-mean(new[new$gender=="Male",]$wages)-mean(new[new$gender=="Female",]$wages)}
+{hist(rand_dist,main="",ylab=""); abline(v = 3.4,col="red")}
+mean(rand_dist>3.4 | rand_dist< -3.4)
+t.test(data=Data,wages~sex)
+
+```
+
+## Linear Regression Model
+In the linear regression below, the coefficient for sex shows that when gender is education is controlled for, sexMale is correlated with a 5.58954 increase in wages. On the other hand, it also shows that when sexMale is controlled for, education results in a .89047 increase in wages. Suprisingly, when these two variables interact, they are correlared with a .15501 decrease in wages. The model has a significant p-value for the Shapiro-Wilk normality test, which means that normality is not present. Additionally, the Breusch-Pagan test also has a low p-value which means that homoskedasticity is not necessarily present. Lastly, the scatterplot has an overall upward trend and is well spread out, which may indicate linearity but but not for certain. Also, it is worth noting that when the robust standard errors are applied, the standrd erros overall appear to increase except for the intercept. It is followed by the fact that t value increase for decreases for everything, except the interact. The most interesting part is that after the robust standard errors are applied the interacion p-value rise above .05, thus making it no longer siginificant. The model in fit explains .1445217 of the variation in the outcome. 
+```{R}
+library(lmtest)
+library(sandwich)
+Data1 = Data
+Data1$wages_c = Data$wages - mean(Data$wages, na.rm=T)
+fit = lm(wages_c~sex*education,data=Data1)
+summary(fit)
+ggplot(Data1, aes(x=education, y=wages_c,group=sex))+geom_point(aes(color=sex))+
+  geom_smooth(method="lm",formula=y~1,se=F,fullrange=T,aes(color=sex))+
+  theme(legend.position=c(.9,.19))+xlab("")
+resids<-fit$residuals
+shapiro.test(resids)
+bptest(fit)
+coeftest(fit)
+coeftest(fit, vcov = vcovHC(fit))
+summary(fit)$r.sq
+
+```
+
+## Bootstrapped Standard Error Values
+In regards to the bootstrapped standard error values below, the standard error values appear to  overall closer to robust standard error values in camparison to the normal standard error values. The only real difference is that the bootstrapped standard error values are slightly higher than the robust standard error values that were obtained. This likely implies that the p-values for boostrapped standard errors are somewhat higher than both the orginal standard errors and robust standard error values. 
+```{R}
+samp_distn<-replicate(5000, {
+  boot_dat <- sample_frac(Data1, replace=T) 
+  fit2 <- lm(wages_c~sex*education, data=boot_dat) 
+  coef(fit2) 
+})
+## Estimated SEs
+samp_distn %>% t %>% as.data.frame %>% summarize_all(sd)
+
+```
+
+## Logistic Regression Model
+By looking at the glm model below, the coefficients that are obtained must be exponentiated in order to ready for interpretation. Once this is done, it is observed that when controlling for wages, 1 increase in weight multiplies the odds of identifying someone as male by .9311934. On the other hand, when controlling for education, one increase in wages results multiplies the odd of identifying somemone as male by 1.0699970. Additonally, it should be observed that when looking at the accuracy of our initial model, we attain an accuracy of .6147479. This means we identified .6147479 of the cases observed correctly as either male or female. Next, we observed a sensitivity of .5589124, which means of the 1986 male cases classified, .5589124 were classified correctly. Additionally, we observed a specificity of .6701649, which means that of the 2001 cases classifed as female, .6701649 of those cases were classified correctly. Lastly, we observed a recall (PPV) of .6271186, which means that the chance of classified males who are actually males is .6271186. Next, According to AUC rules of thumb that were discussed in class, it seems that the AUC values that are obtained in both the 10-fold sampling and the initial model are somewhat poor. However, it should be noted that the AUC value that is obtained in the 10-fold sampling is somewhat higher than that of the ROC plot AUC value, which implies that some overfitting was removed. 
+```{R}
+Data2<-Data%>%mutate(y=ifelse(sex=="Male",1,0))
+fit3<-glm(y~education+wages,data=Data2,family=binomial(link="logit"))
+exp(coef(fit3))%>%data.frame
+probs<-predict(fit3,type="response")
+table(predict=as.numeric(probs>.5),truth=Data2$y)%>%addmargins
+(1341+1110)/3987 ## Accuracy
+1110/1986 ## Sensitivity (TPR)
+1341/2001 ## Specificity (TNR)
+1110/1770 ## Recall (PPV) 
+Data3 = Data
+Data3$logit = predict(fit3,type="link")
+Data3%>%ggplot()+geom_density(aes(logit,color=sex,fill=sex), alpha=.4)+
+  theme(legend.position=c(.85,.85))+geom_vline(xintercept=0)+xlab("logit (log-odds)")+
+  geom_rug(aes(logit,color=sex))
+library(plotROC)
+Data2ROCdata<-Data2%>%mutate(prob=predict(fit3, type="response"), prediction=ifelse(prob>.5,1,0))
+classify<-Data2ROCdata%>%transmute(prob,prediction,truth=y)
+ROCplot1<-ggplot(classify)+geom_roc(aes(d=truth,m=prob), n.cuts=0)+scale_x_continuous(limits = c(0,1))+
+  geom_segment(aes(x=0,y=0,xend=1,yend=1),lty=2)
+ROCplot1
+calc_auc(ROCplot1)
+
+
+## This is the class_diag function from lecture
+class_diag<-function(probs,truth){
+if(is.numeric(truth)==FALSE & is.logical(truth)==FALSE) truth<-as.numeric(truth)-1
+tab<-table(factor(probs>.5,levels=c("FALSE","TRUE")),truth)
+prediction<-ifelse(probs>.5,1,0)
+acc=mean(truth==prediction)
+sens=mean(prediction[truth==1]==1)
+spec=mean(prediction[truth==0]==0)
+ppv=mean(truth[prediction==1]==1)
+#CALCULATE EXACT AUC
+ord<-order(probs, decreasing=TRUE)
+probs <- probs[ord]; truth <- truth[ord]
+TPR=cumsum(truth)/max(1,sum(truth))
+FPR=cumsum(!truth)/max(1,sum(!truth))
+dup<-c(probs[-1]>=probs[-length(probs)], FALSE)
+TPR<-c(0,TPR[!dup],1); FPR<-c(0,FPR[!dup],1)
+n <- length(TPR)
+auc<- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+data.frame(acc,sens,spec,ppv,auc)
+}
+
+set.seed(1234)
+k=10
+
+Data4 <- Data %>% sample_frac #put rows of dataset in random order
+folds <- ntile(1:nrow(Data4),n=10) #create fold labels
+
+diags<-NULL
+for(i in 1:k){
+  train <- Data4[folds!=i,] #create training set (all but fold i)
+  test <- Data4[folds==i,] #create test set (just fold i)
+  truth <- test$sex #save truth labels from fold i
+  
+  fit7 <- glm(sex~(.)^2, data=train, family="binomial")
+  probs <- predict(fit7, newdata=test, type="response")
+  
+  diags<-rbind(diags,class_diag(probs,truth))
+}
+summarize_all(diags,mean)
+```
+
+## LASSO Regression
+After running the lasso regression, only the wages, education, and age variables were retained. This means that these three variables are the most predictive variables in helping determine sex. Since the variable sex is categorical, we will be comparing the accuracy of the LASSO regression to that of the the logistic regression. When compared, one observes minimal difference in the accuracy of both models as both are very close to .617. However, the AUC, PPV, and TNR were slightly lower in the LASSO model, but they were not significantly different. As both still show that the models work somewhat poorly. On the other hand, it is worth noting that TPR increased when the LASSO model is used, which may come as a little suprising considering the TNR value dropped slightly.
+```{R}
+library(glmnet)
+y<-as.matrix(Data$sex)
+x<-model.matrix(sex~.,data=Data)[,-1]
+cv <- cv.glmnet(x,y, family = "binomial")
+lasso<-glmnet(x,y,family="binomial",lambda=cv$lambda.1se)
+coef(lasso)
+
+set.seed(1234)
+k=10
+
+Data5 <- Data %>% sample_frac #put rows of dataset in random order
+folds <- ntile(1:nrow(Data5),n=10) #create fold labels
+
+diags<-NULL
+for(i in 1:k){
+  train <- Data5[folds!=i,] #create training set (all but fold i)
+  test <- Data5[folds==i,] #create test set (just fold i)
+  truth <- test$sex #save truth labels from fold i
+  
+  fit7 <- glm(sex~wages+education+age, data=train, family="binomial")
+  probs <- predict(fit7, newdata=test, type="response")
+  
+  diags<-rbind(diags,class_diag(probs,truth))
+}
+summarize_all(diags,mean)
+```

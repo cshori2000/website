@@ -1,0 +1,193 @@
+---
+title: "SDS 348 Project 1"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+*Chandershekhar Shori, EID--cs56788*
+
+
+
+## Introduction:
+
+  The first data set chosen for this project is the lung dataset. The lung dataset contains data about survival among patients from the North Central Cancer Treatment Group. This dataset contains 10 variables, and these variables are inst, time, status, age, sex, ph.ecog, ph.karno, pat.karno, meal.cal, and wt.loss. The inst variable represents the institution code, the time variable represents the survival time in days, the status variable represents the censoring status, the age variable represents the age in years, meal.cal represents the calories attained at a meal, and wt.loss represents the amount of weight lost in the past 6 months. and the sex variable represents the sex of the individual. On the other hand, the ph.ecog variable represents the ECOG score from the doctor's perspective, ph.karno represents the Karnofsky score from the doctor's perspective, and pat.karno represents the Karnofsky score from the patient's perpective. It is worth noting that the ECOG score helps determine the severity of a patient's symptoms, while the Karnofsky score is used to help determine how well the patients is doing. Next, we will move on to the veteran dataset, whih has data from two types of treatments used to treat lung cancer. This dataset has 8 variables, and these variables are trt, celltype, time, status, karno, diagtime, age, and prior. The trt variable represnts the type of treatment used, the celltype variable represents the type of cell used in therapy, the time variable represents the amount of time the patient survives after starting therapy, the karno variables represents the Karnsofsky score, the diagtime variable represents the months between diagnosis to treatment, the age variable represents the age of the patient in year, and the prior variable represents whether other therapy was used before or not. All this information can be found by using ?lung and ?veteran in the R console. Note that the outputs of these two commands will not appear in the knitted PDF. 
+  
+  Both of these datasets are contained in the survival package, and can be be accessed by using library(survival). I find the veteran and lung datasets to be interesting as they provide me insight on all the factors that are involved in the development of lung cancer. Studying such a dataset will be very beneficial to my future career as I plan to be doctor in the near future, and I may have to deal with patients who suffer from some debilitating kinds of cancers. Thus, analysis of this data will help me move forward with my career. One thing I would like to go over before moving foward is the primary association I expect to see in this investigation. Overall, in this study, I expect to see better health outcomes and health measures for younger individuals in comparison to older individuals. The reason being is that, in general, younger people are more active and fit. This allows them to maintain their health better in comparison to older people. 
+
+```{r cars}
+library(survival)
+?lung
+?veteran
+```
+
+## Tidying and Merging
+
+  To successfully tidy and merge the data, it was necessary to access the tidyr and dplyr libraries. Doing so, one can proceed to tidying up data in order to prep it for analysis. Before proceeding, the lung and veteran datasets were assigned the names data1 and data2 respectively. One notices that there exists 3 variables in the data1 dataset that pertain to types of health performance scores that help indicate the well-being of a cancer patient. These variables are known as "ph.ecog"", "ph.karno"", and "pat.karno", with the exact meanings of these variables having been defined in the introduction. Since these 3 variables all have scores that were obtained from their respective tests, one can pipe the pivot_longer function into dataset1 to take the "ph.ecog", "ph.karno"", and "pat.karno" variables, and turn them into two new variables while reassigning the result back to dataset1. These two new variables are "test"" and "score". The "test"" variable contains the test from which the score was received, and has the following values: "ph.ecog", "ph.karno", and "pat.karno". On the other hand, the "score" variable contains the scores attained on the corresponding tests. Next all incomplete cases in both datasets were dropped as these observations would not be useful future data analysis, and would eventually have to be dropped anyways to do analysis. 
+  
+  Next, we proceed to the merging of the two datasets. Before proceeding with the merge, the time and the status variable from data1 were dropped. The reason the status and time variables were dropped is because these variables exist in both datasets, and these data sets are not being merged on the basis of either of these variables. Next, the full_merge was used on the age variable, as this variables exists in both datasets, in order to merge data1 and data2. This led to the production of a dataset called comb_data. Next, all incomplete cases in comb_data were dropped as these observations would not be useful future data analysis, and would eventually have to be dropped anyways to do analysis. After joining the data, one used the pivot_wider commands on the the "test" and "score" variable columns in order to return back to the orignal state of having the "ph.ecog", "ph.karno"", and "pat.karno" as columns that contained their respective scores, and the result of this was reassigned back to the comb_data variable. Once again, the incomplete cases were dropped as these observations would not be useful future data analysis, and would eventually have to be dropped anyways to do analysis. A glimpse of this data is provided in order to provide a preview of what comb_data looks like.
+  
+
+```{R}
+library(survival)
+library(tidyr)
+library(dplyr)
+data1 = lung
+data2 = veteran
+data2 = select(data2, -c(time))
+data1 = select(data1, -c(status))
+data1 = data1%>%pivot_longer(cols=c(6:8),names_to = "test", values_to="score")
+data1 = data1%>%na.omit()
+data2 = data2%>%na.omit()
+comb_data = full_join(data1,data2,by = "age")
+comb_data = comb_data%>%na.omit()
+comb_data = comb_data %>% pivot_wider(names_from = test, values_from = score)
+comb_data = comb_data %>% na.omit()
+comb_data %>% glimpse()
+
+
+```
+
+## Wrangling
+  
+  For wrangling the data, one makes use of the dplyr package. Before proceeding with wrangling the dataset, the 1 and 2 values for the "sex" variable were reassigned "Male" and "Female" respectively. The reason for this is that sex is a dichotomous variable that only has 2 values in this dataset. Reassigning the "Male" and "Female" values to 1 and 2 respectively, as according to the description of the lung and veteran packages, will make data analysis easier. Additionally, the 0 and 1 values for the "status" variable were reassigned the "censored" and "dead" values respectively. The reason for this is that "status" is a dichotomous variable that only has 2 values in this dataset. Reassigning the "censored" and "dead" values to 0 and 1 respectively, as according to the description of the lung and veteran packages, will make data analysis easier. 
+  
+  Now to start off the wrangling of comb_data, a new variable was created using the mutate function and added backed to the comb_data dataset. This variable was "phpatdiff"", which is determined by finding the difference of "ph.karno" and "pat.karno" for a given row. This variable essentially represents the amount of error by a patient when determining Karnoksky score relative to the "correct" Karnofsky determined by the physician. Once this was completed, one proceeded to finding 10 summaries of the datasets. In the first summary, one determined simply found the mean, standard deviation, maximum value, minumum value, and total observations for weightloss the comb_data dataset. These values came out to 8.1, 11.7, 68, -15, and 651 respectively. In the second summary, one did calculated the same summary statistics that were calculated in summary 1, but this time the summaries were grouped by the cancer cell that was investigated. Doing so, one found that the minumum weight loss values were consistent among all the cancer cell investigated. Yet, the maximum weight loss occurred in the squamous and smallcell cell types. Another thing to note is that the standard deviation for weight loss was highest in the squamous group, which indicates there is a lot of variation for weight loss in this group. Lastly, it is observed that the mean weight loss was highest for the smallcell celltype, which indicates that on average individuals with smallcell cancer lost more weight. In the third summary, one did calculated the same summary statistics that were calculated in summary 1, but this time the summaries were grouped by the sex of the individual. Doing so, one found that the minumum weight loss values were around the same for both males and females as they were not significantly different. Yet, the maximum weight loss occurred in males. Another thing to note is that the standard deviation for weight loss was highest in males, which indicates there is a lot of variation for weight loss in male cancer patients Lastly, it is observed that the mean weight loss was highest for the males, which indicates that on average individuals with males who have cancer lost more weight. In the fourth summary, one did calculated the same summary statistics that were calculated in summary 3, but this time the summaries looked at calorie consumption while grouped by sex. Doing so, one found that the minumum calorie consumption values was higher for males in comparison to females. Thehe maximum calories consumed value was also higher for males in comparison to females. Another thing to note is that the standard deviation for calorie consumption was highest in males, which indicates there is a lot of variation for calorie consumption in this group. Lastly, it is observed that the mean weight loss was highest for males, which indicates that on average individuals with male cancer patients consume more calories than females. In the fifth summary, one did calculated the same summary statistics that were calculated in summary 1, but this time the summaries were grouped by the sex and cancer celltype of the individual. Doing so, one found that the minumum weight loss values were around the same for all groups as they were not significantly different. Yet, the maximum weight loss occurred in males with the squamous celltype. Another thing to note is that the standard deviation for weight loss was highest in males with the squamous celltype, which indicates there is a lot of variation for weight loss in male squamous celltype cancer patients. Lastly, it is observed that the mean weight loss was highest for the males with the large celltype, which indicates that on average individuals with males with large celltype who have cancer lost more weight. Now, we move on to summaries for numerical variables. In the 6th summary, one selected for ph.karno and pat.karno in order to see if there was a correlation between patient predicted Karnofsky score and physician predicted Karnofsky score. Doing so, one found that the correlation coefficient for patient predicted Karnofsky score and physician predicted Karnofsky score came out to be around .522. This means as physcian predicted Karnofsky score increase, the patient predicted Kanofsky score increases and becomes more accurate. Before completeing the 7th summary, one found the median age to be around 64. In the 7th summary, one selected for ph.karno, a pat.karno, and age columns. Then one filtered for patients for 64 or younger in order to find the effects of age on Karnosfsky score on the younger half of the sample. Doing so, one found that the correlation coefficient for patient predicted Karnofsky score and physician predicted Karnofsky score came out to be around .444. This means as physcian predicted Karnofsky score increase, the patient predicted Kanofsky score increases and becomes more accurate for the part of the population that is 64 or younger. Note, however, that this association is a little weak. In the 8th summary, one arranged the sample by age and celltype in order to list the data from youngest patient to oldest patient. Then one selected for the ph.karno, a pat.karno, and age columns. Then using the slice function, one selected for the second half of the data for patients 64 or older.  Doing so, one found that the correlation coefficient for patient predicted Karnofsky score and physician predicted Karnofsky score came out to be around .581. This means as physcian predicted Karnofsky score increase, the patient predicted Kanofsky score increases and becomes more accurate for the part of the population that is 64 or older. In the 9th summary, one selected for meal.cal and pat.karno in order to see if there was a correlation between patient predicted Karnofsky score and calories consumed per meal. Doing so, one found that the correlation coefficient for patient predicted Karnofsky score and caloried consumed per meal came out to be around .178. This means as physcian predicted Karnofsky score increase, the number of calories consumed per meal increases. Note, however, that the correlation coefficient is small, which means that an increase in Karnoksky score is weakly associated with an increase in number of calories consumed. Lastly, in the 10th summary, one selected for phpatdiff and wt.loss in order to see if there was a correlation between the difference of patient determined Karnofsky score and physician Karnofsky score, and weighloss. Doing so, one found that the correlation coefficient for patient predicted Karnofsky score and caloried consumed per meal came out to be around -.0538. This means as patient predicted Karnofsky score increased error, the number of calories consumed per meal decreases. Note, however, that the correlation coefficient is small, which means that an increase in Karnoksky score is weakly associated with a decrease in number of calories consumed.
+  
+```{R}
+comb_data = comb_data %>% 
+  mutate(phpatdiff = ((ph.karno - pat.karno)/ph.karno))
+comb_data$sex[comb_data$sex == 1] <- "Male"
+comb_data$sex[comb_data$sex == 2] <- "Female"
+comb_data$status[comb_data$status == 0] <- "censored"
+comb_data$status[comb_data$status == 1] <- "dead"
+
+#Summary 1
+comb_data %>% 
+  summarize(mean_wtloss = mean(wt.loss), sd_wtloss = sd(wt.loss), max_wtloss = max(wt.loss),
+            min_wtloss = min(wt.loss), n())
+#Summary 2
+comb_data %>% group_by(celltype) %>% 
+  summarize(mean_wtloss = mean(wt.loss), sd_wtloss = sd(wt.loss), max_wtloss = max(wt.loss),
+            min_wtloss = min(wt.loss), n())
+#Summary 3
+comb_data %>% group_by(sex) %>% 
+  summarize(mean_wtloss = mean(wt.loss), sd_wtloss = sd(wt.loss), max_wtloss = max(wt.loss),
+            min_wtloss = min(wt.loss), n())
+
+#Summary 4
+comb_data %>% group_by(sex) %>% 
+  summarize(mean_mealcal = mean(meal.cal), sd_mealcal = sd(meal.cal), max_mealcal = max(meal.cal),
+            min_mealcal = min(meal.cal), n())
+
+#Summary 5
+comb_data %>% group_by(celltype,sex) %>% 
+  summarize(mean_wtloss = mean(wt.loss), sd_wtloss = sd(wt.loss), max_wtloss = max(wt.loss),
+            min_wtloss = min(wt.loss), n())
+
+med_num = round(nrow(comb_data)/2)
+median(comb_data$age)
+#Summary 6
+comb_data%>% select(ph.karno, pat.karno)%>%
+  summarize(cor(ph.karno, pat.karno))
+
+#Summary 7
+comb_data%>% select(age, ph.karno, pat.karno)%>%
+  filter(age >= 64)%>%
+  summarize(cor(ph.karno, pat.karno))
+
+#Summary 8
+comb_data %>% arrange(age, celltype)%>%
+  select(age, ph.karno, pat.karno)%>%
+  slice(1:med_num) %>%
+  summarize(cor(ph.karno, pat.karno))
+
+# Summary 9
+comb_data%>% select(meal.cal, pat.karno)%>%
+  summarize(cor(meal.cal, pat.karno))
+
+#Summary 10
+comb_data%>% select(phpatdiff, wt.loss)%>%
+  summarize(cor(phpatdiff, wt.loss))
+
+
+```
+
+## Visualizing
+
+  In order to make a heat map, one must make use of the ggplot2 and tibble libraries. All the categorical variables are removed in order to just leave numerical variables behind. These numerical variables are then used to make a correlation matrix. Color is added to this matrix in order to generate a heat map. The darker colors on the heat map indicate stronger correlations, while the lighter colors indicate weaker correlations. The dark blue boxes represents correlations of variable against itself, which comes out to be 1. By glancing at the heat map below, it appears that the strongest correlations appear to be concentrated in the middle in a 4x4 square. Besides the blue boxes that contain self coorelations, the correlations in this box are between phpatdiff and pat.karno, phpatdiff and ph.ecog, phpatdiff and ph.karno, ph.karno and pat.karno, ph.karno and ph.ecog, and ph.ecog and pat.karno. These boxes have the following correlation coefficnet respectively: -.59, -.19, .38, .52, -.83, and -.55. 
+  
+  Since the correlation coeffiencient for phpatdiff and pat.karno is moderately large and negative, it is implied that as the patient Karnofsky score error increases, the patient Karnofsky score decreases. Note that these variables are moderately associated. This shows that at lower patient Karnofsky scores, the patient is more likely to make errors in determining their Karnofskey scores. This shows that cancer patients who may not feel healthy are more likely to make mistakes in regards to their well-being on the Karnofsky scale. Next, since the correlation coefficient for phpatdiff and pat.ecog is slighty small and postive, it is implied that as the patient Karnofsky score error increases, the ECOG score increases. Note that these two variables are weakly associated. This shows that as ECOG score increases, the patient is more likely to make less errors in regards to their well-being on the Karnofsky scale. Next, since the correlation coefficient for phpatdiff and ph.karno is slighty small and positive, it is implied that as the patient Karnofsky score error increases, physican Karnofsky score increases. Note that these two variables are weakly associated. This shows that as physicians rate patients as more healthy on the Karnofsky scale, patients are more likely to make errors in regards to their well-being on the Karnofsky scale. This makes sense because it physicians tell patients they are doing well, the patient is more likely to make mistakes in regards to his or her well-being in the future. Next, since the correlation coefficient for ph.karno and pat.karno is moderately large and positive, it is implied that as the patient Karnofsky score increases, physican Karnofsky score increases. Note that these two variables are moderately associated. This shows that as physicians rate patients as more healthy on the Karnofsky scale, patients are more likely rate themselves are healthy in regards to their well-being on the Karnofsky scale. This makes sense because if the doctor thinks a patient is doing well health wise, the patient is likely to think the same. Next, since the correlation coefficient for ph.karno and ph.ecog is large and negative, it is implied that as the ECOG score increases, physican Karnofsky score decreases. Note that these two variables are strongly associated. This shows that as physicians rate patients as less healthy on the Karnofsky scale, patients are more likely to have worse health outcomes on the ECOG scale, which is indicated by a higher score. Next, since the correlation coefficient for ph.ecog and pat.karno is moderately large and negative, it is implied that as the ECOG score increases, patient Karnofsky score decreases. Note that these two variables are strongly associated. This shows that as patients themselves as less healthy on the Karnofsky scale, patients are more likely to have worse health outcomes on the ECOG scale, which is indicated by a higher score. 
+   
+
+```{R}
+library(ggplot2)
+library(tibble)
+comb_data_numeric <- comb_data[,sapply(comb_data, is.numeric)]
+tidycor<-cor(comb_data_numeric)%>%as.data.frame%>%
+  rownames_to_column%>%
+  pivot_longer(-1,names_to="name",values_to="correlation")
+#Heat Map
+tidycor%>%ggplot(aes(rowname,name,fill=correlation))+
+geom_tile()+
+scale_fill_gradient2(low="red",mid="white",high="blue")+ 
+geom_text(aes(label=round(correlation,2)),color = "black", size = 1.9)+ 
+theme(axis.text.x = element_text(angle = 90, hjust=1))+ 
+coord_fixed() 
+```
+ 
+  The graph below required that we make use of the ggplot packege. The graph below looks at the data provided from dead and living patients in regards to weigh loss. The graph specifically looks at patients who fit this criteria, and come from a wide variety of age groups. By looking at the graph, one sees that patients who had deaths that occurred at higher ages typically experienced more weightloss relative to the individuals who are still living and belong to that age group. This is explained by the higher black peaks, which present the dead people data, relative to the red peak that represent the living people data. Overall, this makes sense as older patients who lost more weight that other individuals of their age are likely to have severe cancer symptoms leading to death. The reason being is that severe cancer symptoms typically lead to weight loss that is unhealthy and life threatening.
+  
+```{R}
+#ggplot 1
+ggplot(data = comb_data, aes(x = age, y = wt.loss, color = status)) +
+  geom_point(size = 1) + xlab("Age")+geom_line()+ylab("Weight Lost")+
+  scale_color_manual(values = c("censored" = "red", "dead" = "black"))+
+  ggtitle("Effect of Age on Weight Loss on Dead and Living Patients")
+```
+
+  The graph below required that we make use of the ggplot packege. The graph below looks at the data provided from males and females in regards to calories consumed. The graph specifically looks at patients from four different cancer celltypes from the comb_data dataset. By looking at the dataset below, one sees that for all celltypes, males of a particular cancer celltype consume more calories relative to their female counterparts with the same celltype. This is shown by the fact that the error bars for the males and females of a particular cancer celltype do not overlap at all among all the cell types. Another fact that is worth noting from the graphs below is that overall calorie consumption for a particular sex is not signifcantly effected by the particular cancer celltype involved. The reason being is that the error bars for a particular gender overlap among all the celltypes investigated, which shows that cancer celltypes do not play that much of a significant role in determining calories consumed. Thus, one can conclude that males generally consume more calories than females regardless of cancer celltype.
+  
+```{R}
+##ggplot 2
+ggplot(comb_data, aes(x = celltype, y = meal.cal, fill=sex))+
+  geom_bar(stat="summary",fun.y="mean", position="dodge")+
+  geom_errorbar(stat="summary",position="dodge")+xlab("Type of Cancer Cell")+
+  ylab("Calories Consumed") + scale_y_continuous(breaks = pretty(comb_data$meal.cal, n = 20))+
+  ggtitle("Effect of Cancer Cell Type on Calories Consumed for the Sexes")
+
+
+
+```
+
+
+## Dimensionality Reduction
+
+  To make this cluster, one must first access the cluster library. First, one determines which k-value to use for the cluster analysis by using a for-loop and ggplot. The for-loop finds the sil_width, which is then graphed using a ggplot. The k-value on the gpplot that results in the highest sil_width is the k-value that will be used for clustering. Doing so, by looking at the ggplot, one sees that the k-value of 4 is the one that results in the highest sil_width, so that 4 is the k-value that will be used for clustering. Then one can cluster the data, using a 4 as the k-value, which is accomplished by using the pam functions. Since we are focusing exclusively on numeric variables, we will use select_if(is.numeric) to select for all numeric variables and exclude all other kinds of variables. By following through with the cluster analysis, one can create a ggplot to plot the clusters. For the purposes of this investigation, we applied the cluster to the meal.cal and wt.loss variables in order to create a gpplot. 
+  
+  By looking at the plot we see that the data is clustered into four clusters, with most of cluster points lying between the 500 calories to 1500 calories range. Upon closer inspection, it can be hypothesized that the observations are sorted into groups are based on the four cancer celltypes: squamous, adeno, smallcell, and large. It has already been shown earlier in this project during data visualization that calorie consumption does not significantly vary among the four cancer celltypes, which helps explain why a majority of the points are clustered in the 500 calories to 1500 calories range. Another reason that helps show why the observations are based on the four cell types is that according to the heat map from earlier, it is seen that wt.loss and meal.col have a very weak negative associaton, which helps explain the weak correlation between these two variables on the ggplot. Since the association is so weak, it can be inferred that there is another factor influencing these variables that makes them almost independent of each other. This factor is most likely cancer celltype as this categorical variable is key in organizing all of the observations as was demonstrated in the summaries section. Thus, in conclusion, one can assume that the data is clustered on the basis of cancer celltype 
+
+```{R}
+library(cluster)
+library(ggplot2)
+sil_width = vector()
+for(i in 2:10){
+  pam_fit <- comb_data%>%select_if(is.numeric)%>%pam(i)
+  sil_width[i] <- pam_fit$silinfo$avg.width
+}
+ggplot()+geom_line(aes(x=1:10,y=sil_width))+scale_x_continuous(name="k",breaks=1:10)+ylab("Silhouette Width")+xlab("K-Values")+ggtitle("                          Silhouette Widths for Different K-Values")
+pam1 = comb_data%>%select_if(is.numeric)%>%pam(4)
+pam1$silinfo$avg.width
+clustered_comb_data = comb_data %>% select_if(is.numeric)
+pam = clustered_comb_data %>% pam(4)
+pam_clustered = clustered_comb_data %>%mutate(cluster=as.factor(pam$clustering))
+pam_clustered %>% ggplot(aes(meal.cal,wt.loss, color =cluster))+geom_point()+ylab("Weight Lost")+xlab("Calories Consumed")+ggtitle("          Weight Lost vs Calories Consumed Cluster Analysis")
+
+
+
+```
+

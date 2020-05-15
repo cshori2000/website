@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Chandershekhar Shori" />
+    <meta name="description" content="Describe your website">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>SDS 348 Project 2</title>
+    <meta name="generator" content="Hugo 0.70.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/project2/">SDS 348 Project 2</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<p><em>Chandershekhar Shori, EID–cs56788</em></p>
+<div id="introduction" class="section level2">
+<h2>Introduction:</h2>
+<p>The dataset chosen for this project is the SLID dataset, which can be found in the carData package and accessed by using library(carData). Each row of this dataset represents information collected from a single individual living in the Canadian province of Ontario and is part of the workforce. For this purposes of this project only complete data provided by individuals will be used for this project, and any rows containing NA values will be removed. Doing so leads us to having a dataset with 3987 rows of observations, which means 3987 people have complete data that can be used for the purposes of this investigation. This dataset contains five variables: wages, education, age, sex, and language. First I shall go over the numerical variables used for this study. The wages variables measures the hourly wage rate from all jobs that the individal does, while the education variable measures the number of years of schooling done by the individual. Also the age variable contains the age in years of the individual whose data was collected in that row. Next, I will go over the two categorical variables in this dataset. The first variable is gender, which is the binary categorical variable that will be used for this study, and can take on the values of either “Male” or “Female.” The other categorical variable that is going to be used in this study is language, which represents the language the individual in observation speaks. There are three values for this variable with them being: “English”, “French”, and “Other”. In this study, I expect to see wages be the highest for English-speaking males, and also expect wages to increase as years of education and age increase.</p>
+<pre class="r"><code>library(carData)
+?SLID
+Data = SLID
+Data = Data[complete.cases(Data),]
+nrow(Data)</code></pre>
+<pre><code>## [1] 3987</code></pre>
+</div>
+<div id="anova-and-manova-testing" class="section level2">
+<h2>ANOVA and MANOVA Testing</h2>
+<p>In the code below, a MANOVA was conducted of all three numerical variables that were in this dataset to see if there was a mean difference across the different levels of language, which is categorial variable. Since significance was shown through a low p-value in the MANOVA, a univariate ANOVA was conducted to see which specific variables differed across groups and it was found that age and education differed. One this was done, two post hocs were completed for each of these variables. It should be noted throughout this process 10 tests were completed: 1 MANOVA, 3 ANOVAs, and 6 post hocs, which results in a Bonferroni correction of .005 and decreases the chance of type one error to 0.04888987. By applying these adjusted values to the post hoc tests, it was found that there was significant mean difference between the English and Other language group for both the age and education variabe post hoc tests. This is likely due to the fact that many immigrants come to Canada from countris where English may not be the most common language, such as India. The indiduals are likely to be much older and unable to learn a new language, which may concurrently effect their ability to receive formal education in Canada due to the common languages being French and English. It is worth noting that not all the ANOVA assumptions were not exactly followed in this exam test. The reason being is that the data is not exactly random since we selectively chose for complete cases.</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(pillar)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;pillar&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     dim_desc</code></pre>
+<pre class="r"><code>man1&lt;-manova(cbind(education,age,wages)~language, data=Data)
+summary(man1)</code></pre>
+<pre><code>##             Df   Pillai approx F num Df den Df    Pr(&gt;F)    
+## language     2 0.022144   14.864      6   7966 &lt; 2.2e-16 ***
+## Residuals 3984                                              
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>summary.aov(man1)</code></pre>
+<pre><code>##  Response education :
+##               Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## language       2    387 193.564  21.183 7.062e-10 ***
+## Residuals   3984  36405   9.138                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##  Response age :
+##               Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## language       2   8132  4066.2  27.976 8.6e-13 ***
+## Residuals   3984 579054   145.3                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##  Response wages :
+##               Df Sum Sq Mean Sq F value Pr(&gt;F)
+## language       2     70  34.759  0.5613 0.5705
+## Residuals   3984 246721  61.928</code></pre>
+<pre class="r"><code>Data %&gt;% group_by(language) %&gt;% summarize(mean(education), mean(age), mean(wages))</code></pre>
+<pre><code>## # A tibble: 3 x 4
+##   language `mean(education)` `mean(age)` `mean(wages)`
+##   &lt;fct&gt;                &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+## 1 English               13.5        36.5          15.5
+## 2 French                13.0        37.8          15.5
+## 3 Other                 12.6        40.8          15.9</code></pre>
+<pre class="r"><code>## Post Hoc Test 1
+pairwise.t.test(Data$age,Data$language,
+                p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  Data$age and Data$language 
+## 
+##        English French 
+## French 0.10158 -      
+## Other  1.4e-13 0.00089
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>## Post Hoc Test 2
+pairwise.t.test(Data$education,Data$language,
+                p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  Data$education and Data$language 
+## 
+##        English French
+## French 0.0099  -     
+## Other  6.2e-10 0.0783
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>.05/10 ## Bonferroni correction </code></pre>
+<pre><code>## [1] 0.005</code></pre>
+<pre class="r"><code>1-(.95^10) ## Chance of type I error before adjustion</code></pre>
+<pre><code>## [1] 0.4012631</code></pre>
+<pre class="r"><code>1-((1-.005)^10) ## Chance of type I error after Bonferroni correction</code></pre>
+<pre><code>## [1] 0.04888987</code></pre>
+</div>
+<div id="randomization-tests" class="section level2">
+<h2>Randomization Tests</h2>
+<p>A randomization test is done below to see whether wages vary amongst the genders Male and Female. The null hypothesis is that: There is no difference in wages amongst Males and Females. On the other hand, the alternative hypothesis is: There is a significant difference in wages amongst males and females. When the histogram is created, it is observed that the line for the test statistic does not even show up on the histogram, which is indicative of the fact that the results are clustered closer to the middle of the distribution and are not well spread out. As shown, this results in a p-value of zero, which is further backed up by the low p-value obtained on the Welch test. This indicates that there is a significant difference in wages amongst males and females.</p>
+<pre class="r"><code>library(ggplot2)
+Data%&gt;%group_by(sex)%&gt;%
+    summarize(means=mean(wages))%&gt;%summarize(`mean_diff:`=diff(means))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   `mean_diff:`
+##          &lt;dbl&gt;
+## 1         3.40</code></pre>
+<pre class="r"><code>rand_dist&lt;-vector()
+for(i in 1:5000){
+new&lt;-data.frame(wages=sample(Data$wages),gender=Data$sex)
+rand_dist[i]&lt;-mean(new[new$gender==&quot;Male&quot;,]$wages)-mean(new[new$gender==&quot;Female&quot;,]$wages)}
+{hist(rand_dist,main=&quot;&quot;,ylab=&quot;&quot;); abline(v = 3.4,col=&quot;red&quot;)}</code></pre>
+<p><img src="/project2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>mean(rand_dist&gt;3.4 | rand_dist&lt; -3.4)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>t.test(data=Data,wages~sex)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  wages by sex
+## t = -13.944, df = 3897.8, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -3.873051 -2.918168
+## sample estimates:
+## mean in group Female   mean in group Male 
+##             13.84734             17.24295</code></pre>
+</div>
+<div id="linear-regression-model" class="section level2">
+<h2>Linear Regression Model</h2>
+<p>In the linear regression below, the coefficient for sex shows that when gender is education is controlled for, sexMale is correlated with a 5.58954 increase in wages. On the other hand, it also shows that when sexMale is controlled for, education results in a .89047 increase in wages. Suprisingly, when these two variables interact, they are correlared with a .15501 decrease in wages. The model has a significant p-value for the Shapiro-Wilk normality test, which means that normality is not present. Additionally, the Breusch-Pagan test also has a low p-value which means that homoskedasticity is not necessarily present. Lastly, the scatterplot has an overall upward trend and is well spread out, which may indicate linearity but but not for certain. Also, it is worth noting that when the robust standard errors are applied, the standrd erros overall appear to increase except for the intercept. It is followed by the fact that t value increase for decreases for everything, except the interact. The most interesting part is that after the robust standard errors are applied the interacion p-value rise above .05, thus making it no longer siginificant. The model in fit explains .1445217 of the variation in the outcome.</p>
+<pre class="r"><code>library(lmtest)</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre class="r"><code>library(sandwich)
+Data1 = Data
+Data1$wages_c = Data$wages - mean(Data$wages, na.rm=T)
+fit = lm(wages_c~sex*education,data=Data1)
+summary(fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wages_c ~ sex * education, data = Data1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -19.071  -5.157  -0.807   3.954  32.187 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       -13.63675    0.76640 -17.793  &lt; 2e-16 ***
+## sexMale             5.58954    1.04193   5.365 8.57e-08 ***
+## education           0.89047    0.05583  15.950  &lt; 2e-16 ***
+## sexMale:education  -0.15501    0.07615  -2.036   0.0419 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.281 on 3983 degrees of freedom
+## Multiple R-squared:  0.1445, Adjusted R-squared:  0.1439 
+## F-statistic: 224.3 on 3 and 3983 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>ggplot(Data1, aes(x=education, y=wages_c,group=sex))+geom_point(aes(color=sex))+
+  geom_smooth(method=&quot;lm&quot;,formula=y~1,se=F,fullrange=T,aes(color=sex))+
+  theme(legend.position=c(.9,.19))+xlab(&quot;&quot;)</code></pre>
+<p><img src="/project2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>resids&lt;-fit$residuals
+shapiro.test(resids)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  resids
+## W = 0.9586, p-value &lt; 2.2e-16</code></pre>
+<pre class="r"><code>bptest(fit)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  fit
+## BP = 115.63, df = 3, p-value &lt; 2.2e-16</code></pre>
+<pre class="r"><code>coeftest(fit)</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                     Estimate Std. Error  t value  Pr(&gt;|t|)    
+## (Intercept)       -13.636752   0.766395 -17.7934 &lt; 2.2e-16 ***
+## sexMale             5.589544   1.041925   5.3646 8.573e-08 ***
+## education           0.890473   0.055828  15.9502 &lt; 2.2e-16 ***
+## sexMale:education  -0.155013   0.076152  -2.0356   0.04186 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>coeftest(fit, vcov = vcovHC(fit))</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                     Estimate Std. Error  t value  Pr(&gt;|t|)    
+## (Intercept)       -13.636752   0.732401 -18.6192 &lt; 2.2e-16 ***
+## sexMale             5.589544   1.079318   5.1788 2.344e-07 ***
+## education           0.890473   0.056598  15.7332 &lt; 2.2e-16 ***
+## sexMale:education  -0.155013   0.083241  -1.8622   0.06265 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>summary(fit)$r.sq</code></pre>
+<pre><code>## [1] 0.1445217</code></pre>
+</div>
+<div id="bootstrapped-standard-error-values" class="section level2">
+<h2>Bootstrapped Standard Error Values</h2>
+<p>In regards to the bootstrapped standard error values below, the standard error values appear to overall closer to robust standard error values in camparison to the normal standard error values. The only real difference is that the bootstrapped standard error values are slightly higher than the robust standard error values that were obtained. This likely implies that the p-values for boostrapped standard errors are somewhat higher than both the orginal standard errors and robust standard error values.</p>
+<pre class="r"><code>samp_distn&lt;-replicate(5000, {
+  boot_dat &lt;- sample_frac(Data1, replace=T) 
+  fit2 &lt;- lm(wages_c~sex*education, data=boot_dat) 
+  coef(fit2) 
+})
+## Estimated SEs
+samp_distn %&gt;% t %&gt;% as.data.frame %&gt;% summarize_all(sd)</code></pre>
+<pre><code>##   (Intercept)  sexMale  education sexMale:education
+## 1   0.7320619 1.069154 0.05668604        0.08254078</code></pre>
+</div>
+<div id="logistic-regression-model" class="section level2">
+<h2>Logistic Regression Model</h2>
+<p>By looking at the glm model below, the coefficients that are obtained must be exponentiated in order to ready for interpretation. Once this is done, it is observed that when controlling for wages, 1 increase in weight multiplies the odds of identifying someone as male by .9311934. On the other hand, when controlling for education, one increase in wages results multiplies the odd of identifying somemone as male by 1.0699970. Additonally, it should be observed that when looking at the accuracy of our initial model, we attain an accuracy of .6147479. This means we identified .6147479 of the cases observed correctly as either male or female. Next, we observed a sensitivity of .5589124, which means of the 1986 male cases classified, .5589124 were classified correctly. Additionally, we observed a specificity of .6701649, which means that of the 2001 cases classifed as female, .6701649 of those cases were classified correctly. Lastly, we observed a recall (PPV) of .6271186, which means that the chance of classified males who are actually males is .6271186. Next, According to AUC rules of thumb that were discussed in class, it seems that the AUC values that are obtained in both the 10-fold sampling and the initial model are somewhat poor. However, it should be noted that the AUC value that is obtained in the 10-fold sampling is somewhat higher than that of the ROC plot AUC value, which implies that some overfitting was removed.</p>
+<pre class="r"><code>Data2&lt;-Data%&gt;%mutate(y=ifelse(sex==&quot;Male&quot;,1,0))
+fit3&lt;-glm(y~education+wages,data=Data2,family=binomial(link=&quot;logit&quot;))
+exp(coef(fit3))%&gt;%data.frame</code></pre>
+<pre><code>##                     .
+## (Intercept) 0.9042200
+## education   0.9311934
+## wages       1.0699970</code></pre>
+<pre class="r"><code>probs&lt;-predict(fit3,type=&quot;response&quot;)
+table(predict=as.numeric(probs&gt;.5),truth=Data2$y)%&gt;%addmargins</code></pre>
+<pre><code>##        truth
+## predict    0    1  Sum
+##     0   1341  876 2217
+##     1    660 1110 1770
+##     Sum 2001 1986 3987</code></pre>
+<pre class="r"><code>(1341+1110)/3987 ## Accuracy</code></pre>
+<pre><code>## [1] 0.6147479</code></pre>
+<pre class="r"><code>1110/1986 ## Sensitivity (TPR)</code></pre>
+<pre><code>## [1] 0.5589124</code></pre>
+<pre class="r"><code>1341/2001 ## Specificity (TNR)</code></pre>
+<pre><code>## [1] 0.6701649</code></pre>
+<pre class="r"><code>1110/1770 ## Recall (PPV) </code></pre>
+<pre><code>## [1] 0.6271186</code></pre>
+<pre class="r"><code>Data3 = Data
+Data3$logit = predict(fit3,type=&quot;link&quot;)
+Data3%&gt;%ggplot()+geom_density(aes(logit,color=sex,fill=sex), alpha=.4)+
+  theme(legend.position=c(.85,.85))+geom_vline(xintercept=0)+xlab(&quot;logit (log-odds)&quot;)+
+  geom_rug(aes(logit,color=sex))</code></pre>
+<p><img src="/project2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>library(plotROC)
+Data2ROCdata&lt;-Data2%&gt;%mutate(prob=predict(fit3, type=&quot;response&quot;), prediction=ifelse(prob&gt;.5,1,0))
+classify&lt;-Data2ROCdata%&gt;%transmute(prob,prediction,truth=y)
+ROCplot1&lt;-ggplot(classify)+geom_roc(aes(d=truth,m=prob), n.cuts=0)+scale_x_continuous(limits = c(0,1))+
+  geom_segment(aes(x=0,y=0,xend=1,yend=1),lty=2)
+ROCplot1</code></pre>
+<p><img src="/project2_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<pre class="r"><code>calc_auc(ROCplot1)</code></pre>
+<pre><code>##   PANEL group      AUC
+## 1     1    -1 0.639119</code></pre>
+<pre class="r"><code>## This is the class_diag function from lecture
+class_diag&lt;-function(probs,truth){
+if(is.numeric(truth)==FALSE &amp; is.logical(truth)==FALSE) truth&lt;-as.numeric(truth)-1
+tab&lt;-table(factor(probs&gt;.5,levels=c(&quot;FALSE&quot;,&quot;TRUE&quot;)),truth)
+prediction&lt;-ifelse(probs&gt;.5,1,0)
+acc=mean(truth==prediction)
+sens=mean(prediction[truth==1]==1)
+spec=mean(prediction[truth==0]==0)
+ppv=mean(truth[prediction==1]==1)
+#CALCULATE EXACT AUC
+ord&lt;-order(probs, decreasing=TRUE)
+probs &lt;- probs[ord]; truth &lt;- truth[ord]
+TPR=cumsum(truth)/max(1,sum(truth))
+FPR=cumsum(!truth)/max(1,sum(!truth))
+dup&lt;-c(probs[-1]&gt;=probs[-length(probs)], FALSE)
+TPR&lt;-c(0,TPR[!dup],1); FPR&lt;-c(0,FPR[!dup],1)
+n &lt;- length(TPR)
+auc&lt;- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+data.frame(acc,sens,spec,ppv,auc)
+}
+
+set.seed(1234)
+k=10
+
+Data4 &lt;- Data %&gt;% sample_frac #put rows of dataset in random order
+folds &lt;- ntile(1:nrow(Data4),n=10) #create fold labels
+
+diags&lt;-NULL
+for(i in 1:k){
+  train &lt;- Data4[folds!=i,] #create training set (all but fold i)
+  test &lt;- Data4[folds==i,] #create test set (just fold i)
+  truth &lt;- test$sex #save truth labels from fold i
+  
+  fit7 &lt;- glm(sex~(.)^2, data=train, family=&quot;binomial&quot;)
+  probs &lt;- predict(fit7, newdata=test, type=&quot;response&quot;)
+  
+  diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+summarize_all(diags,mean)</code></pre>
+<pre><code>##         acc      sens      spec       ppv       auc
+## 1 0.6169985 0.5300446 0.7041149 0.6399701 0.6615063</code></pre>
+</div>
+<div id="lasso-regression" class="section level2">
+<h2>LASSO Regression</h2>
+<p>After running the lasso regression, only the wages, education, and age variables were retained. This means that these three variables are the most predictive variables in helping determine sex. Since the variable sex is categorical, we will be comparing the accuracy of the LASSO regression to that of the the logistic regression. When compared, one observes minimal difference in the accuracy of both models as both are very close to .617. However, the AUC, PPV, and TNR were slightly lower in the LASSO model, but they were not significantly different. As both still show that the models work somewhat poorly. On the other hand, it is worth noting that TPR increased when the LASSO model is used, which may come as a little suprising considering the TNR value dropped slightly.</p>
+<pre class="r"><code>library(glmnet)</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## Loaded glmnet 3.0-2</code></pre>
+<pre class="r"><code>y&lt;-as.matrix(Data$sex)
+x&lt;-model.matrix(sex~.,data=Data)[,-1]
+cv &lt;- cv.glmnet(x,y, family = &quot;binomial&quot;)
+lasso&lt;-glmnet(x,y,family=&quot;binomial&quot;,lambda=cv$lambda.1se)
+coef(lasso)</code></pre>
+<pre><code>## 6 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                          s0
+## (Intercept)    -0.153530228
+## wages           0.055374742
+## education      -0.038317710
+## age            -0.005364654
+## languageFrench  .          
+## languageOther   .</code></pre>
+<pre class="r"><code>set.seed(1234)
+k=10
+
+Data5 &lt;- Data %&gt;% sample_frac #put rows of dataset in random order
+folds &lt;- ntile(1:nrow(Data5),n=10) #create fold labels
+
+diags&lt;-NULL
+for(i in 1:k){
+  train &lt;- Data5[folds!=i,] #create training set (all but fold i)
+  test &lt;- Data5[folds==i,] #create test set (just fold i)
+  truth &lt;- test$sex #save truth labels from fold i
+  
+  fit7 &lt;- glm(sex~wages+education+age, data=train, family=&quot;binomial&quot;)
+  probs &lt;- predict(fit7, newdata=test, type=&quot;response&quot;)
+  
+  diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+summarize_all(diags,mean)</code></pre>
+<pre><code>##         acc      sens      spec       ppv       auc
+## 1 0.6187592 0.5658352 0.6724035 0.6314259 0.6578738</code></pre>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
