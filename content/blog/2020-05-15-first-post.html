@@ -1,0 +1,80 @@
+---
+title: First Post
+author: ''
+date: '2020-05-15'
+slug: first-post
+categories: []
+tags: []
+description: ''
+---
+
+
+
+<center>
+<img src="/blog/2020-05-15-first-post_files/rpython.png" width="350" height="200" />
+</center>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<p>Python and R are both fascinating on their own. However when put together, these two softwares can become a powerful tool that can solve complex issues. Below we have an example of how we have used Python to determine all possible k-mers of a particular sequence, which is particularly very useful in the field of bioinformatics.</p>
+<pre class="python"><code>##Python Chunk
+my_seq = &quot;ATCATCATG&quot;
+def k_mercount(sequence):
+    subs = [sequence[x:x+3] for x in range(len(sequence)) if len(sequence[x:x+3]) &gt; 2]
+    kmers = {}
+    for i in subs:
+        if i in kmers:
+            kmers[i] += 1
+        else:
+            kmers[i] = 1
+    print(kmers)
+k_mercount(my_seq)</code></pre>
+<pre><code>## {&#39;ATG&#39;: 1, &#39;CAT&#39;: 2, &#39;ATC&#39;: 2, &#39;TCA&#39;: 2}</code></pre>
+</div>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>Now we will demonstrate the use of R on a dataset. We have conducted a MANOVA test on the dataset below in order to determine if any signifance exists been all three numerical variables that were in the SLID dataset across different kinds of language language, which is categorial variable. Note that a significance does exist. In a real investigation, an ANOVA would have been the next step.</p>
+<pre class="r"><code>## R Chunk
+library(carData)
+Data = SLID
+Data = Data[complete.cases(Data),]
+man1&lt;-manova(cbind(education,age,wages)~language, data=Data)
+summary(man1)</code></pre>
+<pre><code>##             Df   Pillai approx F num Df den Df    Pr(&gt;F)    
+## language     2 0.022144   14.864      6   7966 &lt; 2.2e-16 ***
+## Residuals 3984                                              
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="python-and-r-together" class="section level2">
+<h2>Python and R Together</h2>
+<p>Finally, we will demonstrate how we can use these two softwares together. Below we have used Python to create a random matrix, than is then mean centered using R. These kinds of of methods are particularly useful in gene expression analysis in bioinformatics as mean centering helps make data somewhat more easier to interpret. I have actually utilized such mean centering techniques in my own research investigations.</p>
+<pre class="python"><code>## Python Chunk
+import numpy as np
+np.random.seed( 348 )
+one_D = np.random.randint(1,10,25)
+two_D = one_D.reshape(5,5)</code></pre>
+<pre class="r"><code>## R Chunck
+library(reticulate)
+mean_shift = function(ran_matrix) {
+  for (i in 1:nrow(ran_matrix)){
+    mean_values = mean(as.numeric(ran_matrix[i,]))
+    for (j in 1:ncol(ran_matrix)){
+      ran_matrix[i,j] = ran_matrix[i,j] - mean_values}
+    
+  }
+  ran_center = ran_matrix
+  return (ran_center)
+}
+x = as.matrix(py$two_D)
+mean_shift(x)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,] -0.8  4.2  1.2 -0.8 -3.8
+## [2,] -2.8  1.2  2.2 -1.8  1.2
+## [3,] -1.4  0.6  5.6 -2.4 -2.4
+## [4,]  1.2 -2.8 -2.8  0.2  4.2
+## [5,]  3.8 -3.2  0.8 -0.2 -1.2</code></pre>
+</div>
+<div id="final-thoughts" class="section level2">
+<h2>Final Thoughts</h2>
+<p>After having used both softwares, I feel R is much more useful in regards to statiscal analysis. This maybe due to the fact that I have used R more in general in my research and some of my other classes, giving me much more experience with R. It is worth noting that much of what can be done on Python can also be done on R. Seeing that R can do a lot of what Python does, along with being able to perform statistical analysis in an easier manner, I can truly say R is much more useful than Python.</p>
+</div>
