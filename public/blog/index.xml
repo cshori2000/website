@@ -17,7 +17,8 @@
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/should-i-use-r-python-or-both/</guid>
-      <description>Python Python and R are both fascinating on their own. However when put together, these two softwares can become a powerful tool that can solve complex issues. Below we have an example of how we have used Python to determine all possible k-mers of a particular sequence, which is particularly very useful in the field of bioinformatics.
+      <description>{width=350px height=200px}
+Python Python and R are both fascinating on their own. However when put together, these two softwares can become a powerful tool that can solve complex issues. Below we have an example of how we have used Python to determine all possible k-mers of a particular sequence, which is particularly very useful in the field of bioinformatics.
 ##Python Chunk my_seq = &amp;quot;ATCATCATG&amp;quot; def k_mercount(sequence): subs = [sequence[x:x+3] for x in range(len(sequence)) if len(sequence[x:x+3]) &amp;gt; 2] kmers = {} for i in subs: if i in kmers: kmers[i] += 1 else: kmers[i] = 1 print(kmers) k_mercount(my_seq) R Now we will demonstrate the use of R on a dataset.</description>
     </item>
     
