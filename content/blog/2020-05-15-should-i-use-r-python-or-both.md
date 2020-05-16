@@ -6,10 +6,9 @@ slug: should-i-use-r-python-or-both
 categories: []
 tags: []
 description: ''
-![](/blog/2020-05-15-should-i-use-r-python-or-both_files/rpython.png){width=350px height=200px}
 ---
 
-
+![](/blog/2020-05-15-should-i-use-r-python-or-both_files/rpython.png)
 
 ## Python
 Python and R are both fascinating on their own. However when put together, these two softwares can become a powerful tool that can solve complex issues.  Below we have an example of how we have used Python to determine all possible k-mers of a particular sequence, which is particularly very useful in the field of bioinformatics.
