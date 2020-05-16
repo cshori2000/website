@@ -1,5 +1,5 @@
 ---
-title: First Post
+title: Should I use R, Python, or both?
 author: ''
 date: '2020-05-15'
 slug: first-post
@@ -68,4 +68,4 @@ mean_shift(x)
 ```
 
 ## Final Thoughts
-After having used both softwares, I feel R is much more useful in regards to statiscal analysis. This maybe due to the fact that I have used R more in general in my research and some of my other classes, giving me much more experience with R. It is worth noting that much of what can be done on Python can also be done on R. Seeing that R can do a lot of what Python does, along with being able to perform statistical analysis in an easier manner, I can truly say R is much more useful than Python. 
+After having used both softwares, I feel R is much more useful in regards to statiscal analysis. This maybe due to the fact that I have used R more in general in my research and some of my other classes, giving me much more experience with R. It is worth noting that much of what can be done on Python can also be done on R. However, when these softwares are used together, they can accomplish much more. Since my usage on both of these softwares together is limited, I cannot say much in regards to future applications. Yet, teeing that R can do a lot of what Python does, along with being able to perform statistical analysis in an easier manner, I can say in my opion R is much more useful than Python for my purposes. 

@@ -12,16 +12,6 @@
     
     
     <item>
-      <title>First Post</title>
-      <link>/blog/first-post/</link>
-      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/first-post/</guid>
-      <description>Python Python and R are both fascinating on their own. However when put together, these two softwares can become a powerful tool that can solve complex issues. Below we have an example of how we have used Python to determine all possible k-mers of a particular sequence, which is particularly very useful in the field of bioinformatics.
-##Python Chunk my_seq = &amp;quot;ATCATCATG&amp;quot; def k_mercount(sequence): subs = [sequence[x:x+3] for x in range(len(sequence)) if len(sequence[x:x+3]) &amp;gt; 2] kmers = {} for i in subs: if i in kmers: kmers[i] += 1 else: kmers[i] = 1 print(kmers) k_mercount(my_seq) ## {&amp;#39;ATG&amp;#39;: 1, &amp;#39;CAT&amp;#39;: 2, &amp;#39;ATC&amp;#39;: 2, &amp;#39;TCA&amp;#39;: 2}  R Now we will demonstrate the use of R on a dataset.</description>
-    </item>
-    
-    <item>
       <title>SDS 348 Project 1</title>
       <link>/project1/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
@@ -39,6 +29,16 @@ Introduction: The first data set chosen for this project is the lung dataset. Th
       <guid>/project2/</guid>
       <description>Chandershekhar Shori, EID–cs56788
 Introduction: The dataset chosen for this project is the SLID dataset, which can be found in the carData package and accessed by using library(carData). Each row of this dataset represents information collected from a single individual living in the Canadian province of Ontario and is part of the workforce. For this purposes of this project only complete data provided by individuals will be used for this project, and any rows containing NA values will be removed.</description>
+    </item>
+    
+    <item>
+      <title>Should I use R, Python, or both?</title>
+      <link>/blog/should-i-use-r-python-or-both/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/should-i-use-r-python-or-both/</guid>
+      <description>Python Python and R are both fascinating on their own. However when put together, these two softwares can become a powerful tool that can solve complex issues. Below we have an example of how we have used Python to determine all possible k-mers of a particular sequence, which is particularly very useful in the field of bioinformatics.
+##Python Chunk my_seq = &amp;quot;ATCATCATG&amp;quot; def k_mercount(sequence): subs = [sequence[x:x+3] for x in range(len(sequence)) if len(sequence[x:x+3]) &amp;gt; 2] kmers = {} for i in subs: if i in kmers: kmers[i] += 1 else: kmers[i] = 1 print(kmers) k_mercount(my_seq) R Now we will demonstrate the use of R on a dataset.</description>
     </item>
     
     <item>
