@@ -7,7 +7,6 @@ categories: []
 tags: []
 description: ''
 ---
-
 ![](/blog/2020-05-15-should-i-use-r-python-or-both_files/rpython.png)
 
 ## Python
