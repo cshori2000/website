@@ -13,16 +13,6 @@
   </url>
   
   <url>
-    <loc>/poetry/</loc>
-    <lastmod>2020-05-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/poetry/social-isolation/</loc>
-    <lastmod>2020-05-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
   </url>
@@ -40,6 +30,16 @@
   <url>
     <loc>/blog/should-i-use-r-python-or-both/</loc>
     <lastmod>2020-05-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/poetry/</loc>
+    <lastmod>2020-03-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/poetry/social-isolation/</loc>
+    <lastmod>2020-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
