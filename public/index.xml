@@ -21,16 +21,6 @@
     </item>
     
     <item>
-      <title>SDS 348 Project 1</title>
-      <link>/project1/</link>
-      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/project1/</guid>
-      <description>Chandershekhar Shori, EID–cs56788
-Introduction: The first data set chosen for this project is the lung dataset. The lung dataset contains data about survival among patients from the North Central Cancer Treatment Group. This dataset contains 10 variables, and these variables are inst, time, status, age, sex, ph.ecog, ph.karno, pat.karno, meal.cal, and wt.loss. The inst variable represents the institution code, the time variable represents the survival time in days, the status variable represents the censoring status, the age variable represents the age in years, meal.</description>
-    </item>
-    
-    <item>
       <title>SDS 348 Project 2</title>
       <link>/project2/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
@@ -57,6 +47,16 @@ Introduction: The dataset chosen for this project is the SLID dataset, which can
       
       <guid>/poetry/social-isolation/</guid>
       <description>  People wait for their chance  To go out and have a dance  Yet he still prowls in wait  Waiting of your date  Nothing is more morbid  Than COVID of the horrid  He journeys to the lungs  And there remains clung  May all proceed with caution  Or fight him as an option   </description>
+    </item>
+    
+    <item>
+      <title>SDS 348 Project 1</title>
+      <link>/project1/</link>
+      <pubDate>Mon, 16 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project1/</guid>
+      <description>Chandershekhar Shori, EID–cs56788
+Introduction: The first data set chosen for this project is the lung dataset. The lung dataset contains data about survival among patients from the North Central Cancer Treatment Group. This dataset contains 10 variables, and these variables are inst, time, status, age, sex, ph.ecog, ph.karno, pat.karno, meal.cal, and wt.loss. The inst variable represents the institution code, the time variable represents the survival time in days, the status variable represents the censoring status, the age variable represents the age in years, meal.</description>
     </item>
     
     <item>
