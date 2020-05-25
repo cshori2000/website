@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Poetries on Meet Chandershekhar</title>
+    <link>/poetry/</link>
+    <description>Recent content in Poetries on Meet Chandershekhar</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/poetry/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Social Isolation</title>
+      <link>/poetry/social-isolation/</link>
+      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/poetry/social-isolation/</guid>
+      <description>  People wait for their chance  To go out and have a dance  Yet he still prowls in wait  Waiting of your date  Nothing is more morbid  Than COVID of the horrid  He journeys to the lungs  And there remains clung  May all proceed with caution  Or fight him as an option   </description>
+    </item>
+    
+  </channel>
+</rss>
