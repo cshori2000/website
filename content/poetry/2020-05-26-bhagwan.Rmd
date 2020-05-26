@@ -7,6 +7,7 @@ categories: []
 tags: []
 description: ''
 ---
+<center>
 ## Hum naachate hain uske ishaaron par
 ## Azad hain hum nahi
 ## Issme hain humare khushi
@@ -15,3 +16,4 @@ description: ''
 ## Phir bhee woh hai yahin
 ## Surarakshit hain hum tabhee
 ## Jab tak hain uske saath
+</center>
