@@ -7,11 +7,14 @@ categories: []
 tags: []
 description: ''
 ---
-## Hum naachate hain uske ishaaron par
-## Azad hain hum nahi
-## Issme hain humare khushi
-## Kyon ki woh ho sabase mahaan
-## Hum usse mahasoos nahi kar paate
-## Phir bhee woh hai yahin
-## Surarakshit hain hum tabhee
-## Jab tak hain uske saath
+
+<center>
+##Hum naachate hain uske ishaaron par
+##Azad hain hum nahi
+##Issme hain humare khushi
+##Kyon ki woh ho sabase mahaan
+##Hum usse mahasoos nahi kar paate
+##Phir bhee woh hai yahin
+##Surarakshit hain hum tabhee
+##Jab tak hain uske saath
+</center>
