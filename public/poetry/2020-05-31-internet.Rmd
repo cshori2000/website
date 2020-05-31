@@ -1,0 +1,31 @@
+---
+title: Internet
+author: ''
+date: '2020-05-31'
+slug: internet
+categories: []
+tags: []
+description: ''
+---
+<center>
+##I am absorbed on the net
+##Seeing the whole world
+##Yet chained I remain
+##And watch the time go                 
+</center>
+</div>
+<div style="margin-bottom:50px;">
+</div>
+##Ignoring family and friends
+##To live my life virtual
+##I truly remain unhappy
+##Trapped in this fake realm
+</div>
+<div style="margin-bottom:50px;">
+</div>
+<center>
+##At last my phone goes out
+##Freeing me of this burden
+##Bringing light to my soul
+##To show me the real world
+</center>
