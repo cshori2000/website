@@ -1,0 +1,23 @@
+---
+title: '2020'
+author: ''
+date: '2020-06-03'
+slug: '2020'
+categories: []
+tags: []
+description: ''
+---
+<center>
+##The summer had begun
+##It is time to have fun
+##Yet the virus still roams
+##And peace has gone fray
+##Society is in chaos
+##Leaders deaf to their pleas
+##Change must soon come
+##Or face the angry kin
+##Action is now needed
+##To have justice served
+##It is time to wake up
+##To have our voiced heard
+</center>
