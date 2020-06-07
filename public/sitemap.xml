@@ -3,12 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/poetry/2020/</loc>
-    <lastmod>2020-06-03T00:00:00+00:00</lastmod>
+    <loc>/poetry/i-saw-it-on-campus/</loc>
+    <lastmod>2020-06-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/poetry/</loc>
+    <lastmod>2020-06-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/poetry/2020/</loc>
     <lastmod>2020-06-03T00:00:00+00:00</lastmod>
   </url>
   
