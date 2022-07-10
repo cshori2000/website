@@ -15,9 +15,9 @@ Here are some projects I have recently completed:
 
 - [Differential Gene Expression Analysis of Ulcerative Colitis Tissue Types](/project12345.pdf)
 
-- [Exploratory Data Analysis with Tidyverse Tools](/project1/)
-
 - [Modeling, Testing, and Classification](/project2/)
+
+- [Exploratory Data Analysis with Tidyverse Tools](/project1/)
 
 
 
