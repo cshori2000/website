@@ -11,12 +11,13 @@ title: Projects
 
 Here are some projects I have recently completed:
 
+- [Determining an Ideal Model for Predicting Diabetes Amongst the Pima Indian Heritage Group of Arizona](/project4.pdf)
+
+- [Differential Gene Expression Analysis of Ulcerative Colitis Tissue Types](/project12345.pdf)
+
 - [Exploratory Data Analysis with Tidyverse Tools](/project1/)
 
 - [Modeling, Testing, and Classification](/project2/)
 
-- [Differential Gene Expression Analysis of Ulcerative Colitis Tissue Types](/project12345.pdf)
-
-- [Determining an Ideal Model for Predicting Diabetes Amongst the Pima Indian Heritage Group of Arizona](/project4.pdf)
 
 
