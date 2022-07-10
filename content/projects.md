@@ -11,6 +11,8 @@ title: Projects
 
 Here are some projects I have recently completed:
 
+- [DDW 2022: Rethinking Low Fiber Diets for Inflammatory Bowel Disease]
+
 - [Determining an Ideal Model for Predicting Diabetes Amongst the Pima Indian Heritage Group of Arizona](/project4.pdf)
 
 - [Differential Gene Expression Analysis of Ulcerative Colitis Tissue Types](/project12345.pdf)
