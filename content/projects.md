@@ -11,7 +11,7 @@ title: Projects
 
 Here are some projects I have recently completed:
 
-- [Determining an Ideal Model for Predicting Diabetes Amongst the Pima Indian Heritage Group of Arizona](/DDW_2022.pdf)
+- [Rethinking Low Fiber Diets for Active Inflammatory Bowel Disease](/DDW_2022.pdf)
 
 - [Determining an Ideal Model for Predicting Diabetes Amongst the Pima Indian Heritage Group of Arizona](/project4.pdf)
 
