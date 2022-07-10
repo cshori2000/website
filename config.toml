@@ -38,7 +38,7 @@ theme = "hugo-sustain"
   name = "Resume"
   identifier = "Resume"
   weight = 300
-  url = "/Resume.pdf"
+  url = "/Resume_Shori_.pdf"
 #[[menu.main]]
   #name = "My Poetry"
   #identifier = "My Poetry"
