@@ -10,8 +10,11 @@ title: Projects
 ## Projects 
 
 Here are some projects I have recently completed:
+- [American College of Gastroenterology Annual Meeting 2022: Inflammatory Bowel Disease Patients Commonly But Inconsistently Change Diet for Flares](/ACG_Meeting_Poster_2022.pdf)
 
 - [Digestive Disease Week 2022: Rethinking Low Fiber Diets for Active Inflammatory Bowel Disease](/DDW_2022_.pdf)
+
+- [Introduction to Data Science Capstone Project Report](/Data_Science_Capstone_Project.pdf)
 
 - [Final MOP Project: The Impact of Educational Modalities on COVID-19 Prevalance Amongst Undergraduate Students in the University of Texas System](/MOP_Project_.pdf)
 
