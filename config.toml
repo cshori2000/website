@@ -38,7 +38,7 @@ theme = "hugo-sustain"
   name = "Resume"
   identifier = "Resume"
   weight = 300
-  url = "/Resume_Shori_2023.pdf"
+  url = "/Resume_Shori_2022.pdf"
 #[[menu.main]]
   #name = "My Poetry"
   #identifier = "My Poetry"
