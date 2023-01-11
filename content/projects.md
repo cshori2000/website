@@ -18,6 +18,8 @@ Here are some projects I have recently completed:
 
 - [Final MOP Project: The Impact of Educational Modalities on COVID-19 Prevalance Amongst Undergraduate Students in the University of Texas System](/MOP_Project_.pdf)
 
+- [Health Equity Paper From PHWM 1110: Health Promotion and Behavioral Sciences](/Health_Equity_Paper_SHORI.pdf)
+
 - [Determining an Ideal Model for Predicting Diabetes Amongst the Pima Indian Heritage Group of Arizona](/project4.pdf)
 
 - [Differential Gene Expression Analysis of Ulcerative Colitis Tissue Types](/project12345.pdf)
